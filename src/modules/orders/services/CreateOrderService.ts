@@ -23,10 +23,21 @@ class CreateOrderService {
     private ordersRepository: IOrdersRepository,
     private productsRepository: IProductsRepository,
     private customersRepository: ICustomersRepository,
-  ) {}
+  ) { }
 
   public async execute({ customer_id, products }: IRequest): Promise<Order> {
-    // TODO
+    const customer = await this.customersRepository.findById(customer_id);
+    if (!customer) throw new AppError('Customer does not exists');
+
+    const foundProducts = await this.productsRepository.findAllById(products);
+    if (!foundProducts) throw new AppError('Invalid product on order');
+
+    const order = await this.ordersRepository.create({
+      customer,
+      foundProducts,
+    });
+
+    return order;
   }
 }
 

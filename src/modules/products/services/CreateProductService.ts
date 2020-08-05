@@ -1,4 +1,4 @@
-import { inject, injectable } from 'tsyringe';
+import { injectable } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
 
@@ -13,10 +13,14 @@ interface IRequest {
 
 @injectable()
 class CreateProductService {
-  constructor(private productsRepository: IProductsRepository) {}
+  constructor(private productsRepository: IProductsRepository) { } //eslint-disable-line
 
   public async execute({ name, price, quantity }: IRequest): Promise<Product> {
-    // TODO
+    const productExists = this.productsRepository.findByName(name);
+    if (productExists) throw new AppError('Product already exists');
+
+    const product = this.productsRepository.create({ name, price, quantity });
+    return product;
   }
 }
 
