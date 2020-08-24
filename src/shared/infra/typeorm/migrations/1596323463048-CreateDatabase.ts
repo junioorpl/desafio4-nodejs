@@ -53,8 +53,6 @@ export default class CreateDatabase1596323463048 implements MigrationInterface {
           {
             name: 'price',
             type: 'decimal',
-            scale: 2,
-            precision: 2,
           },
           {
             name: 'quantity',
@@ -127,16 +125,16 @@ export default class CreateDatabase1596323463048 implements MigrationInterface {
           {
             name: 'product_id',
             type: 'uuid',
+            isNullable: true,
           },
           {
             name: 'order_id',
             type: 'uuid',
+            isNullable: true,
           },
           {
             name: 'price',
             type: 'decimal',
-            scale: 2,
-            precision: 2,
           },
           {
             name: 'quantity',
